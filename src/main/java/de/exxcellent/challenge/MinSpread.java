@@ -17,6 +17,6 @@ public class MinSpread {
     }
 
     private int calculateSpread(String maxValue, String minValue) {
-        return Integer.parseInt(maxValue) - Integer.parseInt(minValue);
+        return Math.abs(Integer.parseInt(maxValue) - Integer.parseInt(minValue));
     }
 }

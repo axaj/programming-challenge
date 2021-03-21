@@ -16,6 +16,8 @@ public final class App {
      */
     public static void main(String... args) {
 
+        // TODO: Clean up code -> create methods for repeated function calls
+
         // Your preparation code …
 
         // Read data from file
@@ -34,6 +36,22 @@ public final class App {
         
         // Output Temperature
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+
+        // Read data from file
+        List<String[]> footballData = csvReader.readData("football.csv");
+
+        // Select data needed for analysis
+        DataSelector footballDataSelector = new DataSelector(footballData);
+        List<String> teamNames = footballDataSelector.getTargetValues("Team");
+        List<String> goalsScored = footballDataSelector.getTargetValues("Goals");
+        List<String> goalsAllowed = footballDataSelector.getTargetValues("Goals Allowed");
+
+        // Analysis function call
+        MinSpread footballMinSpread = new MinSpread();
+        String teamWithSmallestGoalSpread = footballMinSpread.findMinSpread(teamNames, goalsScored, goalsAllowed);
+        
+        // Output Football
+        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
 
         // String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         // System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
