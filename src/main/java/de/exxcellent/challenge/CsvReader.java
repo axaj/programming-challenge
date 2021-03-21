@@ -9,7 +9,7 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-public class CsvFileReader implements DataInput {
+public class CsvReader implements DataInput {
     public List<String[]> readData(String fileName){
         // UGLY, don't know how to correctly access resources with Maven
         File file = new File(System.getProperty("user.dir") + "/target/classes/de/exxcellent/challenge/" + fileName);
