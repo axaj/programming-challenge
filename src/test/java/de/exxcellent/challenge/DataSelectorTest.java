@@ -34,6 +34,6 @@ public class DataSelectorTest {
         String targetField = "A";
         DataSelector dataSelector = new DataSelector(data);
         List<String> expectedList = new ArrayList<String>(Arrays.asList("10", "20", "30"));
-        assertEquals(expectedList, dataSelector.getTargetValues(targetField), "Wrong Column!"); // {"10", "20", "30"}
+        assertEquals(expectedList, dataSelector.getValuesByFieldName(targetField), "Wrong Column!"); // {"10", "20", "30"}
     }
 }

@@ -15,48 +15,51 @@ public final class App {
      * @param args The CLI arguments passed
      */
     public static void main(String... args) {
-
-        // TODO: Clean up code -> create methods for repeated function calls
-
-        // Your preparation code …
-
-        // Read data from file
-        DataInput csvReader = new CsvReader();
-        List<String[]> weatherData = csvReader.readData("weather.csv");
-
-        // Select data needed for analysis
-        DataSelector weatherDataSelector = new DataSelector(weatherData);
-        List<String> days = weatherDataSelector.getTargetValues("Day");
-        List<String> maxTemps = weatherDataSelector.getTargetValues("MxT");
-        List<String> minTemps = weatherDataSelector.getTargetValues("MnT");
-
-        // Analysis function call
-        MinSpread weatherMinSpread = new MinSpread();
-        String dayWithSmallestTempSpread = weatherMinSpread.findMinSpread(days, maxTemps, minTemps);
         
-        // Output Temperature
+        String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        // Read data from file
-        List<String[]> footballData = csvReader.readData("football.csv");
-
-        // Select data needed for analysis
-        DataSelector footballDataSelector = new DataSelector(footballData);
-        List<String> teamNames = footballDataSelector.getTargetValues("Team");
-        List<String> goalsScored = footballDataSelector.getTargetValues("Goals");
-        List<String> goalsAllowed = footballDataSelector.getTargetValues("Goals Allowed");
-
-        // Analysis function call
-        MinSpread footballMinSpread = new MinSpread();
-        String teamWithSmallestGoalSpread = footballMinSpread.findMinSpread(teamNames, goalsScored, goalsAllowed);
-        
-        // Output Football
+        String teamWithSmallestGoalSpread = findTeamWithSmallestGoalDifference();
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
 
-        // String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
-        // System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+    }
 
-        // String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
-        // System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+    public static String findDayWithSmallestTempSpread() {
+        String fileName = "weather.csv";
+        FieldNames fieldNames = new FieldNames("Day", "MxT", "MnT");
+
+        return analyze(fileName, fieldNames);
+    }
+
+    public static String findTeamWithSmallestGoalDifference() {
+        String fileName = "football.csv";
+        FieldNames fieldNames = new FieldNames("Team", "Goals", "Goals Allowed");
+
+        return analyze(fileName, fieldNames);
+    }
+
+    private static String analyze(String fileName, FieldNames fieldNames) {
+        DataImport csv = new CsvImporter();
+        List<String[]> data = csv.readData(fileName);
+
+        DataSelector dataSelector = new DataSelector(data);
+        List<String> categories = dataSelector.getValuesByFieldName(fieldNames.category);
+        List<String> dataPointsA = dataSelector.getValuesByFieldName(fieldNames.a);
+        List<String> dataPointsB = dataSelector.getValuesByFieldName(fieldNames.b);
+
+        MinSpread minSpread = new MinSpread();
+        return minSpread.findMinSpread(categories, dataPointsA, dataPointsB);
+    }
+}
+
+class FieldNames {
+    public String category;
+    public String a;
+    public String b; 
+
+    FieldNames(String categoryName, String aName, String bName) {
+        this.category = categoryName;
+        this.a = aName;
+        this.b = bName;
     }
 }

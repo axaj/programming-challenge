@@ -8,7 +8,6 @@ import java.util.List;
 class DataSelector {
     private List<String[]> data;
     /**
-     * 
      * @param inputData first item in List is expected to contain header fields as Array of Strings
      */
     DataSelector(List<String[]> inputData) {
@@ -19,8 +18,8 @@ class DataSelector {
      * @param targetField name of the targeted field
      * @return 
      */
-    public List<String> getTargetValues(String targetField) {
-        int column = getTargetField(targetField); // TODO: what if column -1
+    public List<String> getValuesByFieldName(String targetField) {
+        int column = getTargetField(targetField); // TODO: what if column -1 aka field not found
         ArrayList<String> values = new ArrayList<String>();
 
         for(int i = 1; i < this.data.size(); i++) {
@@ -30,6 +29,7 @@ class DataSelector {
         return values;
     }
 
+    // TODO: Replace with indexOf or binarySearch
     int getTargetField(String targetField) {
         String[] headers = data.get(0);
         int column = -1;
