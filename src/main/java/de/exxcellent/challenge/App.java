@@ -19,7 +19,7 @@ public final class App {
         String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        String teamWithSmallestGoalSpread = findTeamWithSmallestGoalDifference();
+        String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
 
     }
@@ -31,7 +31,7 @@ public final class App {
         return analyze(fileName, fieldNames);
     }
 
-    public static String findTeamWithSmallestGoalDifference() {
+    public static String findTeamWithSmallestGoalSpread() {
         String fileName = "football.csv";
         FieldNames fieldNames = new FieldNames("Team", "Goals", "Goals Allowed");
 
