@@ -1,6 +1,5 @@
 package de.exxcellent.challenge;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,21 +10,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class AppTest {
 
-    private String successLabel = "not successful";
-
-    @BeforeEach
-    void setUp() {
-        successLabel = "successful";
-    }
-
-    @Test
-    void aPointlessTest() {
-        assertEquals("successful", successLabel, "My expectations were not met");
-    }
-
+    // TODO: make this test actually useful -> implement CLI
     @Test
     void runFootball() {
         App.main("--football", "football.csv");
+    }
+
+    @Test
+    void analyzeWeatherTest() {
+        assertEquals("14", App.findDayWithSmallestTempSpread());
+    }
+
+    @Test
+    void analyzeFootballTest() {
+        assertEquals("Aston_Villa", App.findTeamWithSmallestGoalSpread());
     }
 
 }

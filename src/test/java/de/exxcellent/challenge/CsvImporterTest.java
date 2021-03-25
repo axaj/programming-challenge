@@ -22,6 +22,12 @@ class CsvImporterTest {
     }
     
     @Test
+    void readFootballCsvData() {
+        int EXPECTED_NUMBER_OF_LINES = 21;
+        assertEquals(EXPECTED_NUMBER_OF_LINES, csv.readData("football.csv").size());
+    }
+
+    @Test
     void wrongFilenNameTest() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> { 
             csv.readData("wwweather.csv");

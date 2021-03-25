@@ -47,7 +47,7 @@ public final class App {
         List<String> dataPointsA = dataSelector.getValuesByFieldName(fieldNames.a);
         List<String> dataPointsB = dataSelector.getValuesByFieldName(fieldNames.b);
 
-        MinSpread minSpread = new MinSpread();
+        Analyzer minSpread = new Analyzer();
         return minSpread.findMinSpread(categories, dataPointsA, dataPointsB);
     }
 }
