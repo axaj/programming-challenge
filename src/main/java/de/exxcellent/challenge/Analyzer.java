@@ -5,7 +5,11 @@ import java.util.List;
  * TODO: Make this more easily extendable/reusable
  */
 public class Analyzer {
-    public String findMinSpread(List<String> searchTarget, List<String> maxValues, List<String> minValues) {
+    public String findMinSpread(List<String> searchTarget, List<Integer> maxValues, List<Integer> minValues) {
+        if ((searchTarget.size() != maxValues.size()) || (searchTarget.size() != minValues.size())) {
+            return "Error: data set is incomplete there are missing values!";
+        }
+
         int minSpread = calculateSpread(maxValues.get(0), minValues.get(0));
         int rowNumber = 0;
 
@@ -19,37 +23,7 @@ public class Analyzer {
     }
 
 
-    int calculateSpread(String maxValue, String minValue) {
-        return Math.abs(Integer.parseInt(maxValue) - Integer.parseInt(minValue));
-    }
-
-    static boolean isNumber(String str) {
-        return isInteger(str) || isDouble(str);
-    }
-
-    static boolean isInteger(String str) {
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException numberFormatException) {
-            return false;
-        }
-    }
-
-    static boolean isDouble(String str) {
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException numberFormatException) {
-            return false;
-        }
+    int calculateSpread(int maxValue, int minValue) {
+        return Math.abs(maxValue - minValue);
     }
 }

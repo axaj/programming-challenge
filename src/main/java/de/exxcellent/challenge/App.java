@@ -43,9 +43,9 @@ public final class App {
         List<String[]> data = csv.readData(fileName);
 
         DataSelector dataSelector = new DataSelector(data);
-        List<String> categories = dataSelector.getValuesByFieldName(fieldNames.category);
-        List<String> dataPointsA = dataSelector.getValuesByFieldName(fieldNames.a);
-        List<String> dataPointsB = dataSelector.getValuesByFieldName(fieldNames.b);
+        List<String> categories = dataSelector.getStringValuesByFieldName(fieldNames.category);
+        List<Integer> dataPointsA = dataSelector.getIntegerValuesByFieldName(fieldNames.columnA);
+        List<Integer> dataPointsB = dataSelector.getIntegerValuesByFieldName(fieldNames.columnB);
 
         Analyzer minSpread = new Analyzer();
         return minSpread.findMinSpread(categories, dataPointsA, dataPointsB);
@@ -54,12 +54,12 @@ public final class App {
 
 class FieldNames {
     public String category;
-    public String a;
-    public String b; 
+    public String columnA;
+    public String columnB; 
 
     FieldNames(String categoryName, String aName, String bName) {
         this.category = categoryName;
-        this.a = aName;
-        this.b = bName;
+        this.columnA = aName;
+        this.columnB = bName;
     }
 }

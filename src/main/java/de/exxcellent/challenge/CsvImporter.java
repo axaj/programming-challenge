@@ -20,12 +20,15 @@ public class CsvImporter implements DataImport {
         ) {
             rows = reader.readAll();
         } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println(fileNotFoundException);
+            // log error message
+            // System.out.println(fileNotFoundException);
             throw new IllegalArgumentException("File not found.");
         } catch (IOException ioException) {
-            System.out.println(ioException);
+            // log error message
+            // System.out.println(ioException);
         } catch (CsvException csvException) {
-            System.out.println(csvException);
+            // log error message
+            // System.out.println(csvException);
         } 
         
         return rows;

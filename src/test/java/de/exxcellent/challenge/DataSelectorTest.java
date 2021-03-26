@@ -1,6 +1,8 @@
 package de.exxcellent.challenge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,44 @@ public class DataSelectorTest {
     void getTargetValuesTest() {
         String targetField = "A";
         DataSelector dataSelector = new DataSelector(data);
-        List<String> expectedList = new ArrayList<String>(Arrays.asList("10", "20", "30"));
-        assertEquals(expectedList, dataSelector.getValuesByFieldName(targetField), "Wrong Column!"); // {"10", "20", "30"}
+        List<Integer> expectedList = new ArrayList<Integer>(Arrays.asList(10, 20, 30));
+        assertEquals(expectedList, dataSelector.getIntegerValuesByFieldName(targetField), "Wrong Column!"); // {"10", "20", "30"}
     }
+
+    @Test
+    void isNumberTest() {
+        assertTrue(DataSelector.isNumber("1"));
+        assertTrue(DataSelector.isNumber("1.5"));
+        assertTrue(DataSelector.isNumber("-1"));
+        assertTrue(DataSelector.isNumber("-1.7"));
+        assertFalse(DataSelector.isNumber("abc"));
+        assertFalse(DataSelector.isNumber("1d.5abc"));
+        assertFalse(DataSelector.isNumber("abc-1"));
+        assertFalse(DataSelector.isNumber("-1.7abc"));
+    }
+
+    @Test
+    void isIntegerTest() {
+        assertTrue(DataSelector.isInteger("1"));
+        assertFalse(DataSelector.isInteger("1.5"));
+        assertTrue(DataSelector.isInteger("-1"));
+        assertFalse(DataSelector.isInteger("-1.7"));
+        assertFalse(DataSelector.isInteger("abc"));
+        assertFalse(DataSelector.isInteger("1d.5abc"));
+        assertFalse(DataSelector.isInteger("abc-1"));
+        assertFalse(DataSelector.isInteger("-1.7abc"));
+    }
+
+    @Test
+    void isDoubleTest() {
+        assertTrue(DataSelector.isDouble("1"));
+        assertTrue(DataSelector.isDouble("1.5"));
+        assertTrue(DataSelector.isDouble("-1"));
+        assertTrue(DataSelector.isDouble("-1.7"));
+        assertFalse(DataSelector.isDouble("abc"));
+        assertFalse(DataSelector.isDouble("1d.5abc"));
+        assertFalse(DataSelector.isDouble("abc-1"));
+        assertFalse(DataSelector.isDouble("-1.7abc"));
+    }
+
 }
