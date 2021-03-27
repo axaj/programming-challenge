@@ -1,28 +1,32 @@
 package de.exxcellent.challenge;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
 public class CsvImporter implements DataImport {
     public List<String[]> readData(String fileName){
-        // UGLY, don't know how to correctly access resources with Maven
-        File file = new File(System.getProperty("user.dir") + "/target/classes/de/exxcellent/challenge/" + fileName);
         List<String[]> rows = new ArrayList<String[]>();
 
         try (
-            CSVReader reader = new CSVReader(new FileReader(file));
+            InputStream input = getClass().getResourceAsStream(fileName);
+            InputStreamReader inputReader = new InputStreamReader(input, StandardCharsets.UTF_8);
+            CSVReader reader = new CSVReader(inputReader);
         ) {
             rows = reader.readAll();
+        } catch (NullPointerException nullPointerException) {
+            // log error message
+            // System.out.println(fileNotFoundException);
         } catch (FileNotFoundException fileNotFoundException) {
             // log error message
             // System.out.println(fileNotFoundException);
-            throw new IllegalArgumentException("File not found.");
         } catch (IOException ioException) {
             // log error message
             // System.out.println(ioException);

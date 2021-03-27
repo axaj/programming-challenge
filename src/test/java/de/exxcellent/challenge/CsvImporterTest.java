@@ -29,8 +29,6 @@ class CsvImporterTest {
 
     @Test
     void wrongFilenNameTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
-            csv.readData("wwweather.csv");
-        });
+        assertEquals(0, csv.readData("wwweather.csv").size());
     }
 }
