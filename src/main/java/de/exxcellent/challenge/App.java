@@ -2,40 +2,63 @@ package de.exxcellent.challenge;
 
 import java.util.List;
 
+import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
+import picocli.CommandLine.Model.CommandSpec;
+
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
  * design. Read: create your own classes and packages as appropriate.
  *
  * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
  */
-public final class App {
+@Command(name = "csvanalyzer", version = "0.1", description = "")
+public final class App implements Runnable {
+    @Spec CommandSpec spec;
 
-    /**
-     * This is the main entry method of your program.
-     * @param args The CLI arguments passed
-     */
+    @ArgGroup(exclusive = false, multiplicity = "1")
+    OptionGroup group = new App.OptionGroup();
+
+    static class OptionGroup {
+        @Option(names = "--weather", description = "Find the day with the smallest temperature difference (absolute)")
+        String weatherFile;
+        @Option(names = "--football", description = "Find the name of the team with the smallest goal difference (absolute)")
+        String footballFile;
+    }
+
     public static void main(String... args) {
-        
-        String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
-        System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+        int exitCode = new CommandLine(new App()).execute(args); 
+        System.exit(exitCode); 
+    }
 
-        String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
-        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+    @Override
+    public void run() {
+        if (group.weatherFile != null && group.weatherFile.length() > 0) {
+            String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
+            spec.commandLine().getOut().print(dayWithSmallestTempSpread);
+            System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+        }
+        if (group.footballFile != null && group.footballFile.length() > 0) {
+            String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
+            spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
+            System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+        }
 
     }
 
-    public static String findDayWithSmallestTempSpread() {
-        String fileName = "weather.csv";
+    public String findDayWithSmallestTempSpread() {
         FieldNames fieldNames = new FieldNames("Day", "MxT", "MnT");
 
-        return analyze(fileName, fieldNames);
+        return analyze(group.weatherFile, fieldNames);
     }
 
-    public static String findTeamWithSmallestGoalSpread() {
-        String fileName = "football.csv";
+    public String findTeamWithSmallestGoalSpread() {
         FieldNames fieldNames = new FieldNames("Team", "Goals", "Goals Allowed");
 
-        return analyze(fileName, fieldNames);
+        return analyze(group.footballFile, fieldNames);
     }
 
     private static String analyze(String fileName, FieldNames fieldNames) {

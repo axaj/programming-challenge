@@ -2,7 +2,6 @@ package de.exxcellent.challenge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +16,13 @@ class CsvImporterTest {
 
     @Test
     void readWeatherCsvData() {
-        int EXPECTED_NUMBER_OF_LINES = 31;
+        final int EXPECTED_NUMBER_OF_LINES = 31;
         assertEquals(EXPECTED_NUMBER_OF_LINES, csv.readData("weather.csv").size());
     }
     
     @Test
     void readFootballCsvData() {
-        int EXPECTED_NUMBER_OF_LINES = 21;
+        final int EXPECTED_NUMBER_OF_LINES = 21;
         assertEquals(EXPECTED_NUMBER_OF_LINES, csv.readData("football.csv").size());
     }
 
