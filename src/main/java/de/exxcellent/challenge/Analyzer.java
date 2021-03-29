@@ -1,13 +1,14 @@
 package de.exxcellent.challenge;
 
 import java.util.List;
-/**
- * TODO: Make this more easily extendable/reusable
- */
+
 public class Analyzer {
     public String findMinSpread(List<String> searchTarget, List<Integer> maxValues, List<Integer> minValues) {
+        if ((searchTarget == null) || (maxValues == null) || (minValues == null)) {
+            throw new IllegalArgumentException("null parameters not allowed.");
+        }
         if ((searchTarget.size() != maxValues.size()) || (searchTarget.size() != minValues.size())) {
-            return "Error: data set is incomplete there are missing values!";
+            throw new IllegalArgumentException("arguments have to have same size!");
         }
 
         int minSpread = calculateSpread(maxValues.get(0), minValues.get(0));
@@ -21,7 +22,6 @@ public class Analyzer {
         }
         return searchTarget.get(rowNumber);
     }
-
 
     int calculateSpread(int maxValue, int minValue) {
         return Math.abs(maxValue - minValue);

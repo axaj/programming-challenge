@@ -1,6 +1,5 @@
 package de.exxcellent.challenge;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,10 +22,7 @@ public class CsvImporter implements DataImport {
             rows = reader.readAll();
         } catch (NullPointerException nullPointerException) {
             // log error message
-            // System.out.println(fileNotFoundException);
-        } catch (FileNotFoundException fileNotFoundException) {
-            // log error message
-            // System.out.println(fileNotFoundException);
+            System.out.println(nullPointerException);
         } catch (IOException ioException) {
             // log error message
             // System.out.println(ioException);

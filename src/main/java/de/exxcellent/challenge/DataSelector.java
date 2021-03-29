@@ -13,8 +13,13 @@ class DataSelector {
      * @param inputData first item in List is expected to contain header fields as Array of Strings
      */
     DataSelector(List<String[]> inputData) {
+        if (inputData == null) {
+            throw new IllegalArgumentException("There is no data.");
+        }
         this.data = inputData;
-        this.headers = Arrays.asList(data.get(0));
+        if (this.data.size() > 0) {
+            this.headers = Arrays.asList(data.get(0));
+        }
     }
     /**
      * Selects a certain subset of the data, according to a given String.
@@ -22,7 +27,10 @@ class DataSelector {
      * @return List of String data
      */
     public List<String> getStringValuesByFieldName(String targetField) {
-        int column = getTargetField(targetField); // TODO: what if column == -1 aka field not found
+        int column = getTargetField(targetField);
+        if (column == -1) {
+            throw new IllegalArgumentException("Field (" + targetField + ") not in headers.");
+        }
         ArrayList<String> values = new ArrayList<String>();
 
         for(int i = 1; i < this.data.size(); i++) {
@@ -36,25 +44,21 @@ class DataSelector {
      * @return List of Integer data
      */
     public List<Integer> getIntegerValuesByFieldName(String targetField) {
-        int column = getTargetField(targetField); // TODO: what if column == -1 aka field not found
+        List<String> numbers = getStringValuesByFieldName(targetField);
         ArrayList<Integer> result = new ArrayList<Integer>();
 
-        for(int i = 1; i < this.data.size(); i++) {
-            if (isInteger(this.data.get(i)[column])) {
-                result.add(Integer.parseInt(this.data.get(i)[column]));
+        for(String number : numbers) {
+            if (isInteger(number)) {
+                result.add(Integer.parseInt(number));
             } else {
-                throw new IllegalArgumentException("Argument invalid: " + this.data.get(i)[column] + " is not an Integer.");
+                throw new IllegalArgumentException("Argument invalid: " + number + " is not an Integer.");
             }
-        }
+         }
         return result;
     }
 
     int getTargetField(String targetField) {
         return headers.indexOf(targetField);
-    }
-
-    static boolean isNumber(String str) {
-        return isInteger(str) || isDouble(str);
     }
 
     static boolean isInteger(String str) {
@@ -64,19 +68,6 @@ class DataSelector {
 
         try {
             Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException numberFormatException) {
-            return false;
-        }
-    }
-
-    static boolean isDouble(String str) {
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-
-        try {
-            Double.parseDouble(str);
             return true;
         } catch (NumberFormatException numberFormatException) {
             return false;

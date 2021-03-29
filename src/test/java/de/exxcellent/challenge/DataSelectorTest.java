@@ -48,18 +48,6 @@ public class DataSelectorTest {
     }
 
     @Test
-    void isNumberTest() {
-        assertTrue(DataSelector.isNumber("1"));
-        assertTrue(DataSelector.isNumber("1.5"));
-        assertTrue(DataSelector.isNumber("-1"));
-        assertTrue(DataSelector.isNumber("-1.7"));
-        assertFalse(DataSelector.isNumber("abc"));
-        assertFalse(DataSelector.isNumber("1d.5abc"));
-        assertFalse(DataSelector.isNumber("abc-1"));
-        assertFalse(DataSelector.isNumber("-1.7abc"));
-    }
-
-    @Test
     void isIntegerTest() {
         assertTrue(DataSelector.isInteger("1"));
         assertFalse(DataSelector.isInteger("1.5"));
@@ -70,17 +58,4 @@ public class DataSelectorTest {
         assertFalse(DataSelector.isInteger("abc-1"));
         assertFalse(DataSelector.isInteger("-1.7abc"));
     }
-
-    @Test
-    void isDoubleTest() {
-        assertTrue(DataSelector.isDouble("1"));
-        assertTrue(DataSelector.isDouble("1.5"));
-        assertTrue(DataSelector.isDouble("-1"));
-        assertTrue(DataSelector.isDouble("-1.7"));
-        assertFalse(DataSelector.isDouble("abc"));
-        assertFalse(DataSelector.isDouble("1d.5abc"));
-        assertFalse(DataSelector.isDouble("abc-1"));
-        assertFalse(DataSelector.isDouble("-1.7abc"));
-    }
-
 }

@@ -12,6 +12,21 @@ import org.junit.jupiter.api.Test;
 
 class AnalyzerTest {
     private Analyzer minSpread;
+    List<String> testTargets;
+    List<Integer> testMax;
+    List<Integer> testMin;
+
+    void setUpWorkingDataSet() {
+        testTargets = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5"));
+        testMax = new ArrayList<Integer>(Arrays.asList(10, 20, 15, 30, 34));
+        testMin = new ArrayList<Integer>(Arrays.asList(5, 10, 13, 29, 24));
+    }
+
+    void setUpFaultyDataSet() {
+        testTargets = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6")); // 6 elements
+        testMax = new ArrayList<Integer>(Arrays.asList(15, 21, 24, 27, 25)); // only 5 elements!
+        testMin = new ArrayList<Integer>(Arrays.asList(10, 14, 22, 13, 24, 20)); // 6 elements
+    }
 
     @BeforeEach
     void setUp() {
@@ -20,37 +35,32 @@ class AnalyzerTest {
 
     @Test
     void findMinSpreadTest() {
-        List<String> testTargets = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5"));
-        List<Integer> testMax = new ArrayList<Integer>(Arrays.asList(10,20,15,30,34));
-        List<Integer> testMin = new ArrayList<Integer>(Arrays.asList(5,10,13,29,24));
+        setUpWorkingDataSet();
         assertEquals("4", minSpread.findMinSpread(testTargets, testMax, testMin));
     }
 
     @Test
     // what if Lists have different length?
     void differentListLengthsTest() {
-        List<String> testTargets = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6")); // 6 elements
-        List<Integer> testMax = new ArrayList<Integer>(Arrays.asList(15, 21, 24, 27, 25)); // only 5 elements!
-        List<Integer> testMin = new ArrayList<Integer>(Arrays.asList(10, 14, 22, 13, 24, 20)); // 6 elements
-        
-        assertEquals("Error: data set is incomplete there are missing values!", minSpread.findMinSpread(testTargets, testMax, testMin));
+        setUpFaultyDataSet();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
+            minSpread.findMinSpread(testTargets, testMax, testMin);
+        });
     }
 
     @Test
     void nullTest() {
-        List<String> testTargets = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5"));
-        List<Integer> testMax = new ArrayList<Integer>(Arrays.asList(10, 20, 15, 30, 34));
-        List<Integer> testMin = new ArrayList<Integer>(Arrays.asList(5, 10, 13, 29, 24));
-        Assertions.assertThrows(NullPointerException.class, () -> { 
-            minSpread.findMinSpread(null,null,null);
+        setUpWorkingDataSet();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
+            minSpread.findMinSpread(null, null, null);
         });
-        Assertions.assertThrows(NullPointerException.class, () -> { 
+        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
             minSpread.findMinSpread(null, testMax, testMin);
         });
-        Assertions.assertThrows(NullPointerException.class, () -> { 
+        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
             minSpread.findMinSpread(testTargets, null, testMin);
         });
-        Assertions.assertThrows(NullPointerException.class, () -> { 
+        Assertions.assertThrows(IllegalArgumentException.class, () -> { 
             minSpread.findMinSpread(testTargets, testMax, null);
         });
     }

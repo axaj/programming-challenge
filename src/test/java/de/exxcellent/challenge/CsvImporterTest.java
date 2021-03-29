@@ -27,7 +27,7 @@ class CsvImporterTest {
     }
 
     @Test
-    void wrongFilenNameTest() {
+    void wrongFileNameTest() {
         assertEquals(0, csv.readData("wwweather.csv").size());
     }
 }

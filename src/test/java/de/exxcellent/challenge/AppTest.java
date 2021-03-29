@@ -44,7 +44,7 @@ class AppTest {
     @Test
     void runWeatherAndFootball() {
         int exitCode = cmd.execute("--weather=weather.csv", "--football=football.csv");
-        assertEquals(0, exitCode);
+        assertEquals(CommandLine.ExitCode.OK, exitCode);
         assertEquals("14Aston_Villa", sw.toString());
     }
 
@@ -52,6 +52,12 @@ class AppTest {
     void noArgumentsRun() {
         int exitCode = cmd.execute();
         assertEquals(CommandLine.ExitCode.USAGE, exitCode);
+    }
+
+    @Test
+    void wrongFileName() {
+        int exitCode = cmd.execute("--weather=wwweather.csv");
+        assertEquals(CommandLine.ExitCode.OK, exitCode);
     }
 
     @Test

@@ -1,13 +1,14 @@
 package de.exxcellent.challenge;
 
+import java.io.File;
 import java.util.List;
 
 import picocli.CommandLine;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
-import picocli.CommandLine.Model.CommandSpec;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
@@ -37,14 +38,22 @@ public final class App implements Runnable {
     @Override
     public void run() {
         if (group.weatherFile != null && group.weatherFile.length() > 0) {
-            String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
-            spec.commandLine().getOut().print(dayWithSmallestTempSpread);
-            System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+            if (checkIfFileExists(group.weatherFile)) {
+                String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
+                spec.commandLine().getOut().print(dayWithSmallestTempSpread);
+                System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+            } else {
+                System.out.printf("File " + group.weatherFile + " not found.");
+            }
         }
         if (group.footballFile != null && group.footballFile.length() > 0) {
-            String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
-            spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
-            System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+            if (checkIfFileExists(group.footballFile)) {
+                String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
+                spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
+                System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+            } else {
+                System.out.printf("File " + group.footballFile + " not found.");
+            }
         }
 
     }
@@ -73,6 +82,11 @@ public final class App implements Runnable {
         Analyzer minSpread = new Analyzer();
         return minSpread.findMinSpread(categories, dataPointsA, dataPointsB);
     }
+
+    private static boolean checkIfFileExists(String fileName) {
+        File file = new File("target/classes/de/exxcellent/challenge/" + fileName);
+        return file.exists() && !file.isDirectory();
+    }
 }
 
 class FieldNames {
@@ -80,9 +94,9 @@ class FieldNames {
     public String columnA;
     public String columnB; 
 
-    FieldNames(String categoryName, String aName, String bName) {
+    FieldNames(String categoryName, String a, String b) {
         this.category = categoryName;
-        this.columnA = aName;
-        this.columnB = bName;
+        this.columnA = a;
+        this.columnB = b;
     }
 }

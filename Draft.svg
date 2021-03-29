@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 11343 6436" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-461.524,-749.354)">
+        <g transform="matrix(1,0,0,1,2.72848e-12,1559)">
+            <g transform="matrix(0.818447,0,0,0.656978,1861.32,206.437)">
+                <rect x="4323.4" y="947.194" width="3963.26" height="1807.15" style="fill:white;stroke:black;stroke-width:47.31px;"/>
+            </g>
+            <g transform="matrix(10.0774,0,0,9.32984,-48814.8,-13779.6)">
+                <text x="5404.76px" y="1645.6px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:50px;">CI</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,0.92447,2.72848e-12,229.623)">
+            <g>
+                <g transform="matrix(0.818447,0,0,0.710654,1861.32,3651.28)">
+                    <rect x="4323.4" y="947.194" width="3963.26" height="1807.15" style="fill:white;stroke:black;stroke-width:47.31px;"/>
+                </g>
+                <g transform="matrix(9.32984,0,0,9.32984,-44799.9,-10235.4)">
+                    <text x="5404.76px" y="1645.6px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:50px;">D<tspan x="5438.77px 5461.33px 5481.47px " y="1645.6px 1645.6px 1645.6px "></tspan>S<tspan x="5648px " y="1645.6px "></tspan></text>
+                </g>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-9.09495e-12,196)">
+            <g transform="matrix(0.818447,0,0,0.656978,1861.32,5161.45)">
+                <rect x="4323.4" y="947.194" width="3963.26" height="1807.15" style="fill:white;stroke:black;stroke-width:47.31px;"/>
+            </g>
+            <g transform="matrix(9.32984,0,0,9.32984,-44323.4,-8824.6)">
+                <text x="5404.76px" y="1645.6px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:50px;">A</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,-4920.72,1558.14)">
+            <g transform="matrix(0.818447,0,0,0.656978,1861.32,206.437)">
+                <rect x="4323.4" y="947.194" width="3963.26" height="1807.15" style="fill:white;stroke:black;stroke-width:47.31px;"/>
+            </g>
+            <g transform="matrix(10.0774,0,0,9.32984,-48814.8,-13779.6)">
+                <text x="5404.76px" y="1645.6px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:50px;stroke:black;stroke-width:0.1px;stroke-linecap:butt;stroke-miterlimit:2;">D<tspan x="5438.77px 5461.33px 5481.47px " y="1645.6px 1645.6px 1645.6px "></tspan>I</text>
+            </g>
+        </g>
+        <g transform="matrix(1.98609,0,0,3.76595,-5093.23,-8243.88)">
+            <g transform="matrix(0.503501,-0,-0,0.265537,2796.83,2388.04)">
+                <path d="M3558.1,2158.64L3408.48,2234.39L3558.85,2308.64L3558.1,2158.64Z"/>
+                <path d="M3528.47,2233.79C4836.35,2227.48 4836.48,2234.39 4836.48,2234.39" style="fill:none;stroke:black;stroke-width:50px;"/>
+            </g>
+        </g>
+        <g transform="matrix(0.438754,0,0,0.406207,4194.05,2873.37)">
+            <text x="0px" y="0px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:466.492px;stroke:black;stroke-width:2.37px;stroke-linecap:butt;stroke-miterlimit:2;">implements</text>
+        </g>
+        <g transform="matrix(0.562097,0,0,0.744815,3098.78,515.742)">
+            <ellipse cx="6979" cy="890.5" rx="1240" ry="554.5" style="fill:white;stroke:black;stroke-width:50.46px;"/>
+        </g>
+        <g transform="matrix(1.08012,0,0,1,6554.94,1329.68)">
+            <text x="0px" y="0px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:466.492px;stroke:black;stroke-width:0.96px;stroke-linecap:butt;stroke-miterlimit:2;">CS</text>
+        </g>
+        <g transform="matrix(1,0,0,1.49354,0,-1134.16)">
+            <g transform="matrix(1,-0,-0,0.66955,461.524,1261.1)">
+                <path d="M6635.13,1398.65L6560.13,1548.65L6485.13,1398.65L6635.13,1398.65Z"/>
+                <path d="M6560.13,970.646L6560.13,1428.65" style="fill:none;stroke:black;stroke-width:50px;"/>
+            </g>
+        </g>
+        <g transform="matrix(1,-0,-0,1,461.524,749.354)">
+            <path d="M6635.13,3254.65L6560.13,3404.65L6485.13,3254.65L6635.13,3254.65Z"/>
+            <path d="M6560.13,2908.65L6560.13,3284.65" style="fill:none;stroke:black;stroke-width:50px;"/>
+        </g>
+        <g transform="matrix(1,-0,-0,1,461.524,749.354)">
+            <path d="M6635.13,5014.65L6560.13,5164.65L6485.13,5014.65L6635.13,5014.65Z"/>
+            <path d="M6560.13,4737.65L6560.13,5044.65" style="fill:none;stroke:black;stroke-width:50px;"/>
+        </g>
+        <g transform="matrix(0.711913,0,0,0.659104,8964.17,3001.18)">
+            <text x="0px" y="0px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:455.163px;stroke:black;stroke-width:1.46px;stroke-linecap:butt;stroke-miterlimit:2;">Imp<tspan x="741.854px " y="0px ">o</tspan>rts all <tspan x="2137.68px " y="0px ">C</tspan>SV data</text>
+        </g>
+        <g transform="matrix(1.08012,0,0,1,8964.17,4896.08)">
+            <text x="0px" y="0px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:300px;stroke:black;stroke-width:0.96px;stroke-linecap:butt;stroke-miterlimit:2;">Sele<tspan x="500.824px " y="0px ">c</tspan>t data ne<tspan x="1730.12px " y="0px ">c</tspan>essar<tspan x="2485.61px " y="0px ">y</tspan></text>
+        </g>
+        <g transform="matrix(1.08012,0,0,1,-3369.9,609.642)">
+            <text x="11419.1px" y="6049.06px" style="font-family:'LinuxBiolinumG', 'Linux Biolinum G';font-size:300px;stroke:black;stroke-width:0.96px;stroke-linecap:butt;stroke-miterlimit:2;">Find minimal Spr<tspan x="13553.8px 13691px " y="6049.06px 6049.06px ">ea</tspan>d</text>
+        </g>
+    </g>
+</svg>
