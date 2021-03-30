@@ -8,6 +8,7 @@ import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Spec;
 
 /**
@@ -20,15 +21,18 @@ import picocli.CommandLine.Spec;
 public final class App implements Runnable {
     @Spec CommandSpec spec;
 
-    @ArgGroup(exclusive = false, multiplicity = "1")
+    @ArgGroup(exclusive = true, multiplicity = "1")
     OptionGroup group = new App.OptionGroup();
 
     static class OptionGroup {
         @Option(names = "--weather", description = "Find the day with the smallest temperature difference (absolute)")
-        String weatherFile;
+        boolean weather;
         @Option(names = "--football", description = "Find the name of the team with the smallest goal difference (absolute)")
-        String footballFile;
+        boolean football;
     }
+
+    @Parameters(paramLabel = "FILE", arity = "1..*", description = "CSV files whose contents to analyze")
+    List<File> files;
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args); 
@@ -37,48 +41,47 @@ public final class App implements Runnable {
 
     @Override
     public void run() {
-        if (group.weatherFile != null && group.weatherFile.length() > 0) {
-            if (checkIfFileExists(group.weatherFile)) {
-                String dayWithSmallestTempSpread = analyzeWeather(group.weatherFile);
-                spec.commandLine().getOut().print(dayWithSmallestTempSpread);
-                System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
-            } else {
-                System.out.printf("File " + group.weatherFile + " not found.");
+        if (group.weather) {
+            for(File f : files) {
+                if (f.isFile()) {
+                    String dayWithSmallestTempSpread = analyzeWeather(f);
+                    spec.commandLine().getOut().print(dayWithSmallestTempSpread);
+                    System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+                } else {
+                    System.out.printf("File " + f.toString() + " not found.");
+                }
             }
         }
-        if (group.footballFile != null && group.footballFile.length() > 0) {
-            if (checkIfFileExists(group.footballFile)) {
-                String teamWithSmallestGoalSpread = analyzeFootball(group.footballFile);
-                spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
-                System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
-            } else {
-                System.out.printf("File " + group.footballFile + " not found.");
+        if (group.football) {
+            for(File f : files) {
+                if (f.isFile()) {
+                    String teamWithSmallestGoalSpread = analyzeFootball(f);
+                    spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
+                    System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+                } else {
+                    System.out.printf("File " + f.toString() + " not found.");
+                }
             }
         }
 
     }
 
-    static String analyzeWeather(String fileName) {
+    static String analyzeWeather(File file) {
         DataImport csv = new CsvImporter();
-        List<String[]> data = csv.readData(fileName);
+        List<String[]> data = csv.readData(file.getName());
         IDataSelector dataSelector = new DataSelector(data);
         Analyzer analyzer = new WeatherAnalyzer(dataSelector);
 
         return analyzer.run();
     }
 
-    static String analyzeFootball(String fileName) {
+    static String analyzeFootball(File file) {
         DataImport csv = new CsvImporter();
-        List<String[]> data = csv.readData(fileName);
+        List<String[]> data = csv.readData(file.getName());
         IDataSelector dataSelector = new DataSelector(data);
         Analyzer analyzer = new FootballAnalyzer(dataSelector);
 
         return analyzer.run();
-    }
-
-    private static boolean checkIfFileExists(String fileName) {
-        File file = new File("target/classes/de/exxcellent/challenge/" + fileName);
-        return file.isFile();
     }
 }
 

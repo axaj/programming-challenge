@@ -2,6 +2,7 @@ package de.exxcellent.challenge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -29,23 +30,22 @@ class AppTest {
 
     @Test
     void runWeather() {
-        int exitCode = cmd.execute("--weather=weather.csv");
+        int exitCode = cmd.execute("--weather", "weather.csv");
         assertEquals(CommandLine.ExitCode.OK, exitCode);
         assertEquals("14", sw.toString());
     }
 
     @Test
     void runFootball() {
-        int exitCode = cmd.execute("--football=football.csv");
+        int exitCode = cmd.execute("--football", "football.csv");
         assertEquals(CommandLine.ExitCode.OK, exitCode);
         assertEquals("Aston_Villa", sw.toString());
     }
 
     @Test
     void runWeatherAndFootball() {
-        int exitCode = cmd.execute("--weather=weather.csv", "--football=football.csv");
-        assertEquals(CommandLine.ExitCode.OK, exitCode);
-        assertEquals("14Aston_Villa", sw.toString());
+        int exitCode = cmd.execute("--weather", "--football", "weather.csv", "football.csv");
+        assertEquals(CommandLine.ExitCode.USAGE, exitCode);
     }
 
     @Test
@@ -54,21 +54,22 @@ class AppTest {
         assertEquals(CommandLine.ExitCode.USAGE, exitCode);
     }
 
-    // TODO: Improve this behaviour
+    // TODO: Improve this behaviour, should probably use CommandLine.ExitCode.SOFTWARE to signal error here
     @Test
     void wrongFileName() {
-        int exitCode = cmd.execute("--weather=wwweather.csv");
+        int exitCode = cmd.execute("--weather", "wwweather.csv");
         assertEquals(CommandLine.ExitCode.OK, exitCode);
+        
     }
 
     @Test
     void analyzeWeatherTest() {
-        assertEquals("14", App.analyzeWeather("weather.csv"));
+        assertEquals("14", App.analyzeWeather(new File("weather.csv")));
     }
     
     @Test
     void analyzeFootballTest() {
-        assertEquals("Aston_Villa", App.analyzeFootball("football.csv"));
+        assertEquals("Aston_Villa", App.analyzeFootball(new File("football.csv")));
     }
 
 }
