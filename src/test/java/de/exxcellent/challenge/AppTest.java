@@ -59,17 +59,16 @@ class AppTest {
     void wrongFileName() {
         int exitCode = cmd.execute("--weather", "wwweather.csv");
         assertEquals(CommandLine.ExitCode.OK, exitCode);
-        
     }
 
     @Test
     void analyzeWeatherTest() {
-        assertEquals("14", App.analyzeWeather(new File("weather.csv")));
+        assertEquals("14", App.analyze(new File("weather.csv"), "weather"));
     }
     
     @Test
     void analyzeFootballTest() {
-        assertEquals("Aston_Villa", App.analyzeFootball(new File("football.csv")));
+        assertEquals("Aston_Villa", App.analyze(new File("football.csv"), "football"));
     }
 
 }

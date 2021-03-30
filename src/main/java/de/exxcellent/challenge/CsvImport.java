@@ -9,7 +9,7 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-public class CsvImporter implements DataImport {
+public class CsvImport implements DataImport {
     public List<String[]> readData(String fileName){
         List<String[]> rows = new ArrayList<String[]>();
 

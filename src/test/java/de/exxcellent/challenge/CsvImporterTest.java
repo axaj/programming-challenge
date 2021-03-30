@@ -11,7 +11,7 @@ class CsvImporterTest {
 
     @BeforeEach
     void setup() {
-        csv = new CsvImporter();
+        csv = new CsvImport();
     }
 
     @Test

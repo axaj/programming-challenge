@@ -17,12 +17,12 @@ import picocli.CommandLine.Spec;
  *
  * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
  */
-@Command(name = "csvanalyzer", version = "0.1", description = "")
+@Command(name = "csvanalyzer", mixinStandardHelpOptions = true, version = "0.1", description = "")
 public final class App implements Runnable {
     @Spec CommandSpec spec;
 
     @ArgGroup(exclusive = true, multiplicity = "1")
-    OptionGroup group = new App.OptionGroup();
+    private OptionGroup group = new App.OptionGroup();
 
     static class OptionGroup {
         @Option(names = "--weather", description = "Find the day with the smallest temperature difference (absolute)")
@@ -32,7 +32,7 @@ public final class App implements Runnable {
     }
 
     @Parameters(paramLabel = "FILE", arity = "1..*", description = "CSV files whose contents to analyze")
-    List<File> files;
+    private List<File> files;
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args); 
@@ -44,55 +44,37 @@ public final class App implements Runnable {
         if (group.weather) {
             for(File f : files) {
                 if (f.isFile()) {
-                    String dayWithSmallestTempSpread = analyzeWeather(f);
+                    String dayWithSmallestTempSpread = analyze(f, "weather");
                     spec.commandLine().getOut().print(dayWithSmallestTempSpread);
                     System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
                 } else {
                     System.out.printf("File " + f.toString() + " not found.");
+                    // throw new IllegalArgumentException("File " + f.toString() + " doesn't exist.");
                 }
             }
-        }
-        if (group.football) {
+        } else if (group.football) {
             for(File f : files) {
                 if (f.isFile()) {
-                    String teamWithSmallestGoalSpread = analyzeFootball(f);
+                    String teamWithSmallestGoalSpread = analyze(f, "football");
                     spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
                     System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
                 } else {
                     System.out.printf("File " + f.toString() + " not found.");
+                    // throw new IllegalArgumentException("File " + f.toString() + " doesn't exist.");
                 }
             }
         }
-
     }
 
-    static String analyzeWeather(File file) {
-        DataImport csv = new CsvImporter();
-        List<String[]> data = csv.readData(file.getName());
+    static String analyze(File file, String dataType) {
+        DataImportFactory dataImporterFactory = new DataImportFactory();
+        DataImport csv = dataImporterFactory.createDataImport("csv");
+        List<String[]> data = csv.readData(file.getAbsolutePath());
         IDataSelector dataSelector = new DataSelector(data);
-        Analyzer analyzer = new WeatherAnalyzer(dataSelector);
+
+        AnalyzerFactory analyzerFactory = new AnalyzerFactory();
+        Analyzer analyzer = analyzerFactory.createAnalyzer(dataSelector, dataType);
 
         return analyzer.run();
-    }
-
-    static String analyzeFootball(File file) {
-        DataImport csv = new CsvImporter();
-        List<String[]> data = csv.readData(file.getName());
-        IDataSelector dataSelector = new DataSelector(data);
-        Analyzer analyzer = new FootballAnalyzer(dataSelector);
-
-        return analyzer.run();
-    }
-}
-
-class FieldNames {
-    public String category;
-    public String columnA;
-    public String columnB; 
-
-    FieldNames(String categoryName, String a, String b) {
-        this.category = categoryName;
-        this.columnA = a;
-        this.columnB = b;
     }
 }
