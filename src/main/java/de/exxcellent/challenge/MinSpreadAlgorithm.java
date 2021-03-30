@@ -8,15 +8,16 @@ public class MinSpreadAlgorithm implements Algorithm {
     private List<Integer> minValues;
 
     public MinSpreadAlgorithm(List<String> searchTarget, List<Integer> maxValues, List<Integer> minValues) {
-        this.searchTarget = searchTarget;
-        this.maxValues = maxValues;
-        this.minValues = minValues;
         if ((searchTarget == null) || (maxValues == null) || (minValues == null)) {
             throw new IllegalArgumentException("null parameters not allowed.");
         }
         if ((searchTarget.size() != maxValues.size()) || (searchTarget.size() != minValues.size())) {
             throw new IllegalArgumentException("arguments have to have same size!");
         }
+
+        this.searchTarget = searchTarget;
+        this.maxValues = maxValues;
+        this.minValues = minValues;
     }
 
     public String run() {

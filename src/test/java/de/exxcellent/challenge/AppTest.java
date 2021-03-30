@@ -63,12 +63,12 @@ class AppTest {
 
     @Test
     void analyzeWeatherTest() {
-        assertEquals("14", App.analyze(new File("weather.csv"), "weather"));
+        assertEquals("14", App.analyze(new File("weather.csv"), ContentType.WEATHER));
     }
     
     @Test
     void analyzeFootballTest() {
-        assertEquals("Aston_Villa", App.analyze(new File("football.csv"), "football"));
+        assertEquals("Aston_Villa", App.analyze(new File("football.csv"), ContentType.FOOTBALL));
     }
 
 }

@@ -41,39 +41,27 @@ public final class App implements Runnable {
 
     @Override
     public void run() {
-        if (group.weather) {
-            for(File f : files) {
-                if (f.isFile()) {
-                    String dayWithSmallestTempSpread = analyze(f, "weather");
+        for(File f : files) {
+            if (f.isFile()) {
+                if (group.weather) {
+                    String dayWithSmallestTempSpread = analyze(f, ContentType.WEATHER);
                     spec.commandLine().getOut().print(dayWithSmallestTempSpread);
                     System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
-                } else {
-                    System.out.printf("File " + f.toString() + " not found.");
-                    // throw new IllegalArgumentException("File " + f.toString() + " doesn't exist.");
-                }
-            }
-        } else if (group.football) {
-            for(File f : files) {
-                if (f.isFile()) {
-                    String teamWithSmallestGoalSpread = analyze(f, "football");
+                } else if (group.football) {
+                    String teamWithSmallestGoalSpread = analyze(f, ContentType.FOOTBALL);
                     spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
                     System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
-                } else {
-                    System.out.printf("File " + f.toString() + " not found.");
-                    // throw new IllegalArgumentException("File " + f.toString() + " doesn't exist.");
                 }
+            } else {
+                System.out.printf("File " + f.toString() + " not found.");
+                // throw new IllegalArgumentException("File " + f.toString() + " doesn't exist.");
             }
         }
     }
 
-    static String analyze(File file, String dataType) {
-        DataImportFactory dataImporterFactory = new DataImportFactory();
-        DataImport csv = dataImporterFactory.createDataImport("csv");
-        List<String[]> data = csv.readData(file.getAbsolutePath());
-        IDataSelector dataSelector = new DataSelector(data);
-
+    static String analyze(File file, ContentType contentType) {
         AnalyzerFactory analyzerFactory = new AnalyzerFactory();
-        Analyzer analyzer = analyzerFactory.createAnalyzer(dataSelector, dataType);
+        Analyzer analyzer = analyzerFactory.createAnalyzer(file.getAbsolutePath(), contentType);
 
         return analyzer.run();
     }
