@@ -36,7 +36,7 @@ public class DataSelectorTest {
         String targetField = "A";
         DataSelector dataSelector = new DataSelector(data);
         List<Integer> expectedList = new ArrayList<Integer>(Arrays.asList(10, 20, 30));
-        assertEquals(expectedList, dataSelector.getIntegerValuesByFieldName(targetField));
+        assertEquals(expectedList, dataSelector.selectIntegersByFieldName(targetField));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class DataSelectorTest {
         String targetField = "D";
         DataSelector dataSelector = new DataSelector(data);
         List<String> expectedList = new ArrayList<String>(Arrays.asList("15", "25", "25"));
-        assertEquals(expectedList, dataSelector.getStringValuesByFieldName(targetField));
+        assertEquals(expectedList, dataSelector.selectStringsByFieldName(targetField));
     }
 
     @Test

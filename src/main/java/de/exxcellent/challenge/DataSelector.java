@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Utility class to help select columns out of a list of rows
  */
-class DataSelector {
+class DataSelector implements IDataSelector {
     private List<String[]> data;
     private List<String> headers;
     /**
@@ -26,7 +26,7 @@ class DataSelector {
      * @param targetField name of the targeted field
      * @return List of String data
      */
-    public List<String> getStringValuesByFieldName(String targetField) {
+    public List<String> selectStringsByFieldName(String targetField) {
         int column = getTargetField(targetField);
         if (column == -1) {
             throw new IllegalArgumentException("Field (" + targetField + ") not in headers.");
@@ -43,8 +43,8 @@ class DataSelector {
      * @param targetField String name of the targeted field
      * @return List of Integer data
      */
-    public List<Integer> getIntegerValuesByFieldName(String targetField) {
-        List<String> numbers = getStringValuesByFieldName(targetField);
+    public List<Integer> selectIntegersByFieldName(String targetField) {
+        List<String> numbers = selectStringsByFieldName(targetField);
         ArrayList<Integer> result = new ArrayList<Integer>();
 
         for(String number : numbers) {

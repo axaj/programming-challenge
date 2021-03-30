@@ -39,7 +39,7 @@ public final class App implements Runnable {
     public void run() {
         if (group.weatherFile != null && group.weatherFile.length() > 0) {
             if (checkIfFileExists(group.weatherFile)) {
-                String dayWithSmallestTempSpread = findDayWithSmallestTempSpread();
+                String dayWithSmallestTempSpread = analyzeWeather(group.weatherFile);
                 spec.commandLine().getOut().print(dayWithSmallestTempSpread);
                 System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
             } else {
@@ -48,7 +48,7 @@ public final class App implements Runnable {
         }
         if (group.footballFile != null && group.footballFile.length() > 0) {
             if (checkIfFileExists(group.footballFile)) {
-                String teamWithSmallestGoalSpread = findTeamWithSmallestGoalSpread();
+                String teamWithSmallestGoalSpread = analyzeFootball(group.footballFile);
                 spec.commandLine().getOut().print(teamWithSmallestGoalSpread);
                 System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
             } else {
@@ -58,34 +58,27 @@ public final class App implements Runnable {
 
     }
 
-    public String findDayWithSmallestTempSpread() {
-        FieldNames fieldNames = new FieldNames("Day", "MxT", "MnT");
-
-        return analyze(group.weatherFile, fieldNames);
-    }
-
-    public String findTeamWithSmallestGoalSpread() {
-        FieldNames fieldNames = new FieldNames("Team", "Goals", "Goals Allowed");
-
-        return analyze(group.footballFile, fieldNames);
-    }
-
-    private static String analyze(String fileName, FieldNames fieldNames) {
+    static String analyzeWeather(String fileName) {
         DataImport csv = new CsvImporter();
         List<String[]> data = csv.readData(fileName);
+        IDataSelector dataSelector = new DataSelector(data);
+        Analyzer analyzer = new WeatherAnalyzer(dataSelector);
 
-        DataSelector dataSelector = new DataSelector(data);
-        List<String> categories = dataSelector.getStringValuesByFieldName(fieldNames.category);
-        List<Integer> dataPointsA = dataSelector.getIntegerValuesByFieldName(fieldNames.columnA);
-        List<Integer> dataPointsB = dataSelector.getIntegerValuesByFieldName(fieldNames.columnB);
+        return analyzer.run();
+    }
 
-        Analyzer minSpread = new Analyzer();
-        return minSpread.findMinSpread(categories, dataPointsA, dataPointsB);
+    static String analyzeFootball(String fileName) {
+        DataImport csv = new CsvImporter();
+        List<String[]> data = csv.readData(fileName);
+        IDataSelector dataSelector = new DataSelector(data);
+        Analyzer analyzer = new FootballAnalyzer(dataSelector);
+
+        return analyzer.run();
     }
 
     private static boolean checkIfFileExists(String fileName) {
         File file = new File("target/classes/de/exxcellent/challenge/" + fileName);
-        return file.exists() && !file.isDirectory();
+        return file.isFile();
     }
 }
 

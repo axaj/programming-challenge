@@ -1,5 +1,5 @@
 package de.exxcellent.challenge;
 
-public interface Analyzer {
+public interface Algorithm {
     public String run();
 }

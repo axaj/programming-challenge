@@ -54,6 +54,7 @@ class AppTest {
         assertEquals(CommandLine.ExitCode.USAGE, exitCode);
     }
 
+    // TODO: Improve this behaviour
     @Test
     void wrongFileName() {
         int exitCode = cmd.execute("--weather=wwweather.csv");
@@ -62,16 +63,12 @@ class AppTest {
 
     @Test
     void analyzeWeatherTest() {
-        myApp.group = new App.OptionGroup(); 
-        myApp.group.weatherFile = "weather.csv";
-        assertEquals("14", myApp.findDayWithSmallestTempSpread());
+        assertEquals("14", App.analyzeWeather("weather.csv"));
     }
-
+    
     @Test
     void analyzeFootballTest() {
-        myApp.group = new App.OptionGroup();  
-        myApp.group.footballFile = "football.csv";
-        assertEquals("Aston_Villa", myApp.findTeamWithSmallestGoalSpread());
+        assertEquals("Aston_Villa", App.analyzeFootball("football.csv"));
     }
 
 }
